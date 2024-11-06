@@ -8,7 +8,7 @@
     "format": "prettier --ignore-unknown --write .",
     "clean": "rimraf dist .parcel-cache",
     "generateSW": "workbox generateSW",
-    "start": "parcel",
+    "start": "parcel src/index.html --open",
     "build:parcel": "parcel build --dist-dir=dist --public-url=./",
     "build": "npm-run-all clean build:parcel",
     "postbuild": "npm run generateSW",

@@ -728,3 +728,132 @@ if (maxImageDimensionsFromStorage) {
 }
 
 maxImageDimensionsSelect.disabled = false;
+
+
+// event
+
+document.addEventListener('DOMContentLoaded', () => {
+  const imageContainer = document.getElementById('imageContainer');
+  const imageUpload = document.getElementById('imageUpload');
+  const fileSelectBtn = document.getElementById('fileSelectBtn');
+
+  fileSelectBtn.addEventListener('click', () => {
+    imageUpload.click();
+  });
+
+  imageUpload.addEventListener('change', handleImageUpload);
+
+  function handleImageUpload(event) {
+    const files = event.target.files;
+    for (const file of files) {
+      // Create wrapper div
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('draggable', 'resizable');
+      wrapper.style.position = 'absolute';
+      wrapper.style.width = '200px';
+      wrapper.style.height = '200px';
+      wrapper.style.left = '10px';
+      wrapper.style.top = '10px';
+
+      // Create controls container
+      const controls = document.createElement('div');
+      controls.classList.add('controls');
+
+      // Create flip button with text
+      const flipBtn = document.createElement('button');
+      flipBtn.innerHTML = '↔️ Flip Image'; // Changed to be more descriptive
+      flipBtn.classList.add('flip-button');
+      flipBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        img.classList.toggle('flipped');
+      });
+
+      controls.appendChild(flipBtn);
+
+      // Create image
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'contain';
+
+      // Create resize handle
+      const resizeHandle = document.createElement('div');
+      resizeHandle.classList.add('resize-handle', 'br');
+
+      // Append elements
+      wrapper.appendChild(controls);
+      wrapper.appendChild(img);
+      wrapper.appendChild(resizeHandle);
+      imageContainer.appendChild(wrapper);
+
+      // Add drag event listener to wrapper
+      wrapper.addEventListener('mousedown', function (e) {
+        if (!e.target.classList.contains('resize-handle') && !e.target.classList.contains('flip-button')) {
+          dragElement(wrapper, e);
+        }
+      });
+
+      // Add resize event listener to handle
+      resizeHandle.addEventListener('mousedown', function (e) {
+        e.stopPropagation();
+        resizeElement(wrapper, e);
+      });
+    }
+  }
+
+  function dragElement(element, e) {
+    e.preventDefault();
+
+    const startX = e.clientX - element.offsetLeft;
+    const startY = e.clientY - element.offsetTop;
+
+    function moveElement(e) {
+      element.style.left = (e.clientX - startX) + 'px';
+      element.style.top = (e.clientY - startY) + 'px';
+    }
+
+    function stopMoving() {
+      document.removeEventListener('mousemove', moveElement);
+      document.removeEventListener('mouseup', stopMoving);
+    }
+
+    document.addEventListener('mousemove', moveElement);
+    document.addEventListener('mouseup', stopMoving);
+  }
+
+  function resizeElement(element, e) {
+    e.preventDefault();
+
+    const startWidth = parseInt(element.style.width);
+    const startHeight = parseInt(element.style.height);
+    const startX = e.clientX;
+    const startY = e.clientY;
+
+    function handleResize(e) {
+      const newWidth = startWidth + (e.clientX - startX);
+      const newHeight = startHeight + (e.clientY - startY);
+
+      // Set minimum size
+      if (newWidth > 50) element.style.width = newWidth + 'px';
+      if (newHeight > 50) element.style.height = newHeight + 'px';
+    }
+
+    function stopResize() {
+      document.removeEventListener('mousemove', handleResize);
+      document.removeEventListener('mouseup', stopResize);
+    }
+
+    document.addEventListener('mousemove', handleResize);
+    document.addEventListener('mouseup', stopResize);
+  }
+});
+
+// Create flip button
+const flipBtn = document.createElement('button');
+flipBtn.textContent = 'Flip'; // Changed to just "Flip"
+flipBtn.classList.add('flip-button');
+flipBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  img.classList.toggle('flipped');
+});
