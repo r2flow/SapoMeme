@@ -19,11 +19,6 @@ Some of the key features of the application include creating memes by:
 - Taking a photo with your device's web camera
 - Using a solid color as background
 
-## Screenshots
-
-The following screenshots show the application in action:
-
-![meme](screenshots/screenshot.png)
 
 ## Development
 
