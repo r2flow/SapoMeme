@@ -1,6 +1,6 @@
 # Meme Generator
 
-A Progressive Web App (PWA) for creating memes.
+
 
 ## About
 
@@ -9,9 +9,6 @@ The application is built with web technologies such as HTML, CSS, and JavaScript
 It uses the [Canvas API](https://developer.mozilla.org/docs/Web/API/Canvas_API) to draw the meme text on the image. 
 Processing the image and text is done client-side, so no data is sent to any server.
 
-## Live demo
-
-👉 [Meme Generator](https://georapbox.github.io/meme-generator/)
 
 ## Features
 
@@ -41,9 +38,6 @@ Below are the instructions for setting up the development environment.
 
 Clone the repository to your local machine:
 
-```sh
-git clone git@github.com:georapbox/meme-generator.git
-```
 
 Navigate to the project's directory and install the dependencies:
 
@@ -79,8 +73,3 @@ To deploy the application, run the following command:
 npm run deploy
 ```
 
-This will build the application first and then deploy it to GitHub Pages in the `gh-pages` branch.
-
-## License
-
-[The MIT License (MIT)](https://github.com/georapbox/meme-generator/blob/master/LICENSE)
